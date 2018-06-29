@@ -62,9 +62,27 @@ def all_grid_neighbours(grid):
     """
     Gets all of the posible neighbours for each position in the grid
     """
+    #neighbours = {} is creating an empty dictionary so you have somewhere to 
+    #store the neighbours of all the grid positions. 
     neighbours = {}
+    #Remember, we use a dictionary if we want key value pairs. In this case you
+    #need to know which neighbour and what letter it contains so a dictionary 
+    #is the best way to capture this.
     for position in grid:
         position_neighbours = neighbours_of_position(position)
         neighbours[position] = [p for p in position_neighbours if p in grid]
+        #Here we are adding the position to the dictionary but only those 
+        #neighbours that are actually in the grid. 
+        #So a corner or edge grid position has neighbours that are outside the
+        #grid but we don't care about them as they cannot contain a letter. 
     return neighbours
+    
+#Now we create our word generator
+def path_to_word(grid, path)
+    """
+    Adds all of the letters on a path to a string
+    """
+    #This gets the list of letters for the positions in the path and then joins
+    #them into a string (join positions of grid if they're in the path)
+    return " ".join([grid[p] for p in path])
    
