@@ -42,3 +42,13 @@ class TestBoogle(unittest.TestCase):
         Test to ensure that all of the coordinates inside of the grid can be
         accessed
         """
+        grid = boogle.make_grid(2, 2)
+        #We use the assertIn method to check whether 0,0 IS IN a 2x2 grid
+        self.assertIn((0, 0), grid)
+        #We check the same for (0, 1), (1, 0) and for (1, 1)
+        self.assertIn((0, 1), grid)
+        self.assertIn((1, 1), grid)
+        #The assertNotIn method asserts that (2, 2) IS NOT in a 2x2 grid
+        self.assertNotIn((2, 2), grid)
+        
+        

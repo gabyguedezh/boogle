@@ -12,7 +12,7 @@ def make_grid(width, height):
     """
     Creates a grid that will hold all of the tiles for a boogle game
     This function creates a dictionary with a row-column tuple as the key
-    and a space as the value
+    and a space as the value (we're not concern yet with the letter)
     """
     return {(row, col): " " for row in range(height)
         for col in range(width)}
