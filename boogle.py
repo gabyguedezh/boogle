@@ -57,3 +57,14 @@ def neighbours_of_position(coords):
     return [top_left, top_center, top_right,
             left, right,
             bottom_left, bottom_center, bottom_right]
+
+def all_grid_neighbours(grid):
+    """
+    Gets all of the posible neighbours for each position in the grid
+    """
+    neighbours = {}
+    for position in grid:
+        position_neighbours = neighbours_of_position(position)
+        neighbours[position] = [p for p in position_neighbours if p in grid]
+    return neighbours
+   

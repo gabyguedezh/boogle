@@ -83,3 +83,31 @@ class TestBoogle(unittest.TestCase):
         #We're writing very simple code which we can turn complex later on 
         #Is easier to make simple complex than to make complex simple
         #We want to test if there are neighbours in a given coordinate
+    
+    def test_all_neighbours_grid(self):
+        """
+        Ensure that all of the grid positions have neighbours.
+        The trick is to remember that in a 2x2 grid, every position touches 
+        #every other position, so the neighbours of any position are the other
+        #three positions of the 2x2 grid
+        """
+        #We make a 2x2 grid for testing purposes
+        grid = boogle.make_grid(2, 2)
+        #In the line below, we get all the neighbours for the grid.
+        #This is a dictionary where the key is a position (just like with the
+        #grid itself) and the VALUE is a list of neighbouring positions
+        neighbours = boogle.all_grid_neighbours(grid)
+        #The next line asserts the correct length of the neighbours dictionary
+        self.assertEqual(len(neighbours), len(grid))
+        #The FOR loop will iterate through the positions in the grid. 
+        for pos in grid:
+            #For each position, the neighbours are the other three positions on
+            #the grid, so we create the OTHERS list, which is a full grid minus 
+            #the position in question
+            others = list(grid) #Creates a new list from the dictionary's keys
+            others.remove(pos) #Removes a given position, leaving only neighbours
+            #It asserts that the positions are the neighbours of the position
+            #being checked. Remember that in a 2x2, the neigbours list should be
+            #equal to a list of all the positions minus the given one (others)
+            self.assertListEqual(sorted(neighbours[pos]), sorted(others))
+        
