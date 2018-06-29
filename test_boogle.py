@@ -138,6 +138,7 @@ class TestBoogle(unittest.TestCase):
         #In this case it's a 2x2 grid containing the letters A, B, C and D
         grid = {(0, 0): "A", (0, 1): "B", (1, 0): "C", (1, 1): "D"}
         #We also define a dictionary of twoLetterWord and threeLetterWord
+        #We'll later load a proper dictionary, but for now, this will do
         twoLetterWord = "AB"
         threeLetterWord = "ABC"
         notThereWord = "EEE"
@@ -151,3 +152,14 @@ class TestBoogle(unittest.TestCase):
         self.assertTrue(twoLetterWord in foundWords)
         self.assertTrue(threeLetterWord in foundWords)
         self.assertTrue(notThereWord not in foundWords)
+    
+    #Now we test if we have successfully loaded a dictionary, which should have
+    #a length greater than 0
+    def test_load_dictionary(self):
+        """
+        Tests that get_dictionary function returns a dictionary.
+        Well work withbogwords.txt by Duke university in the US
+        """
+        dictionary = boogle.get_dictionary("words.txt")
+        self.assertGreater(len(dictionary), 0)
+        

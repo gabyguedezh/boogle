@@ -141,4 +141,14 @@ def search(grid, dictionary):
     #For each position in the grid we do a search and convert all the paths and
     #make valid words into words and return them in a list
     
+#Now we create our get_dictionary function to upload a proper list of words
+#We've previously addeed our dictionary to a file named words.txt
+def get_dictionary(dictionary_file):
+    """
+    This function loads a dictionary file
+    """
+    with open(dictionary_file) as f:
+        #This loads the dictionary file into a list of words that are uppercase
+        return [w.strip().upper for w in f]
+        
   
