@@ -149,7 +149,7 @@ def get_dictionary(dictionary_file):
     """
     with open(dictionary_file) as f:
         #This loads the dictionary file into a list of words that are uppercase
-        return [w.strip().upper for w in f]
+        return [w.strip().upper() for w in f]
         
 #Now we need to bring it all together with a function that turns
 #all our work into a runnable program
