@@ -1,5 +1,6 @@
 import unittest
 import boogle
+from string import ascii_uppercase #The 26 ascii uppercase characters A to Z
 
 """
 The unittest framework uses classes and inheritance so we'll create a class 
@@ -50,5 +51,35 @@ class TestBoogle(unittest.TestCase):
         self.assertIn((1, 1), grid)
         #The assertNotIn method asserts that (2, 2) IS NOT in a 2x2 grid
         self.assertNotIn((2, 2), grid)
-        
-        
+    
+    def test_grid_is_filled_with_letters(self):
+        """
+        Ensure that each of the coordinates of the grid contains letters
+        """
+        #Initially this test will fail because at the point of writing, our 
+        #grid is filled with spaces as specified in the tuple we've created
+        grid = boogle.make_grid(2, 3)
+        for letter in grid.values(): 
+        #Remember our tupple with key: row-col, value: ("should be letter")
+            self.assertIn(letter, ascii_uppercase)
+            #This test to see if our "letter" is one of the 26 ascii characters
+    
+    def test_neighbours_of_a_position(self):
+        """
+        Ensure that a position has 8 neighbours (while we know this won't be the
+        case if it's on an edge or a corner, we're not concerned with those 
+        special cases yet)
+        """
+        coords = (1, 2)
+        neighbours = boogle.neighbours_of_position(coords)
+        self.assertIn((0, 1), neighbours)
+        self.assertIn((0, 2), neighbours)
+        self.assertIn((0, 3), neighbours)
+        self.assertIn((1, 1), neighbours)
+        self.assertIn((1, 3), neighbours)
+        self.assertIn((2, 1), neighbours)
+        self.assertIn((2, 2), neighbours)
+        self.assertIn((2, 3), neighbours)
+        #We're writing very simple code which we can turn complex later on 
+        #Is easier to make simple complex than to make complex simple
+        #We want to test if there are neighbours in a given coordinate
