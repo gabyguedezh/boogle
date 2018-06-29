@@ -144,7 +144,9 @@ class TestBoogle(unittest.TestCase):
         notThereWord = "EEE"
         #Two of the "words" above are in the grid and should be found and the third
         #one is not on the grid and it should not be found
-        dictionary = [twoLetterWord, threeLetterWord, notThereWord]
+        full_words = [twoLetterWord, threeLetterWord, notThereWord]
+        stems = ["A", "AB", "E", "EE"]
+        dictionary = full_words, stems
         
         foundWords = boogle.search(grid, dictionary)
         #In this case we'll use assert True in all three statements, but notice that

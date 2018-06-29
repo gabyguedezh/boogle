@@ -90,8 +90,10 @@ def path_to_word(grid, path):
     
 #After running cPrifile and realising that our search is taking too long, we'll
 #create a new function outside of it to aligerate its run
-def word_in_dictionary(word, dict):
-    return word in dict
+#However, we will delete it later on, as we have updated our search function
+#and is ultimately redundant
+# def word_in_dictionary(word, dict):
+#     return word in dict
 
 #Now we create a serach function
 def search(grid, dictionary):
@@ -110,6 +112,8 @@ def search(grid, dictionary):
     #a letter can be repeated in the grid several times (if we had two letter "A"
     #and we saved a word with an "A" in it, the program woudln't know which "A" 
     #was it)
+    #We unpacked the dictionary tuple into full_words and stems
+    full_words, stems = dictionary
     
     def do_search(path):
         #It is perfectly valid to nest functions and in this case it will be 
@@ -124,9 +128,16 @@ def search(grid, dictionary):
         #and checks if it's in the dictionary.
         #if word in dictionary:
         #The line above was changed to the function below after cProfile
-        if word_in_dictionary(word, dictionary):
-            #If the path makes a word, it's added to the paths list.
+        #if word_in_dictionary(word, dictionary):
+        #The line above was changed after creating full_words and stems
+        if word in full_words:
+            #If the path makes a full word, it's added to the paths list.
             paths.append(path)
+        #After we created stems, we come back and add this line
+        if word not in stems:
+            #If a word is not a stem (meaning there's no point in searching
+            #further), we simply drop the search and go back to the next one
+            return
         #The do_search function can be called by the search() function, and it can
         #call itself recursively to build up paths.
         for next_pos in neighbours[path[- 1]]:
@@ -156,10 +167,29 @@ def get_dictionary(dictionary_file):
     """
     This function loads a dictionary file
     """
+    #As we're making our program faster, we'll modify this function so it will
+    #now return stems (partial words) in addition to full words)
+    full_words, stems = set(), set()
+    #The avobe means the dictionary function is now returning a tuple of two 
+    #sets, one contains full words and the other contains the stems
+    
     with open(dictionary_file) as f:
         #This loads the dictionary file into a list of words that are uppercase
+        
+        #We had to modify our call to allow for the stems to be found as well
+        for word in f:
+            #We have the words, which we'll add to the full_words set
+            word = word.strip().upper()
+            full_words.add(word)
+            #And we also have the stems, which will go to the stems set
+            for i in range(1, len(word)):
+                stems.add(word[:i])
         #Changing the [] to {} changes the data structure from a list to a set
-        return {w.strip().upper() for w in f}
+        #return {w.strip().upper() for w in f}
+        #After we created the stems and modified our function, we changed the 
+        #comented line above for the rollowing return
+    return full_words, stems
+    #After modifying this, we need to update our search function
         
 #Challenge - create the display_words method    
 def display_words(words):
