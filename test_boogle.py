@@ -126,4 +126,28 @@ class TestBoogle(unittest.TestCase):
         #This tests checks that the path_to_word function returns the same
         #string we manually constructed in the test
         self.assertEqual(oneLetterWord, grid[(0, 0)])
-        self.assertEqual(twoLetterWord, grid[(0,0)] + grid[(1, 1)])
+        self.assertEqual(twoLetterWord, grid[(0, 0)] + grid[(1, 1)])
+    
+    #Now we get into searching...
+    #Given a grid and a list of words, we need to find the words in the grid
+    def test_search_grid_for_words(self):
+        """
+        Ensure that certain patterns can be found in a path_to_word
+        """
+        #For this test, we'll create a mock grid so we can control the letters
+        #In this case it's a 2x2 grid containing the letters A, B, C and D
+        grid = {(0, 0): "A", (0, 1): "B", (1, 0): "C", (1, 1): "D"}
+        #We also define a dictionary of twoLetterWord and threeLetterWord
+        twoLetterWord = "AB"
+        threeLetterWord = "ABC"
+        notThereWord = "EEE"
+        #Two of the "words" above are in the grid and should be found and the third
+        #one is not on the grid and it should not be found
+        dictionary = [twoLetterWord, threeLetterWord, notThereWord]
+        
+        foundWords = boogle.search(grid, dictionary)
+        #In this case we'll use assert True in all three statements, but notice that
+        #for notThereWord we're using "not in" instead of "in" 
+        self.assertTrue(twoLetterWord in foundWords)
+        self.assertTrue(threeLetterWord in foundWords)
+        self.assertTrue(notThereWord not in foundWords)

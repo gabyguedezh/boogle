@@ -78,11 +78,67 @@ def all_grid_neighbours(grid):
     return neighbours
     
 #Now we create our word generator
-def path_to_word(grid, path)
+def path_to_word(grid, path):
     """
     Adds all of the letters on a path to a string
     """
     #This gets the list of letters for the positions in the path and then joins
     #them into a string (join positions of grid if they're in the path)
-    return " ".join([grid[p] for p in path])
-   
+    return "".join([grid[p] for p in path])
+
+#Now we create a serach function
+def search(grid, dictionary):
+    """
+    This function accepts a grid and a dictionary, so it matches the 
+    dependencies we've identified early on.
+    We search through the path to locate the words by matching strings to the
+    words in a dictionary (so, if the string is not equal to a word in the 
+    dictionary, it won't be a valid word for our game)
+    """
+    #first we get the neighbours of every position in the grid, and then we get
+    #the paths list to capture all paths that form valid words
+    neighbours = all_grid_neighbours(grid)
+    paths = []
+    #The reason why we're storing words as paths rather than as strings is that 
+    #a letter can be repeated in the grid several times (if we had two letter "A"
+    #and we saved a word with an "A" in it, the program woudln't know which "A" 
+    #was it)
+    
+    def do_search(path):
+        #It is perfectly valid to nest functions and in this case it will be 
+        #useful. The do_search function exists within the scope of the search()
+        #function (it can't be called directly).
+        #The search() function starts to search by passing a single position to
+        #the do_search(). This is a path of one letter. 
+        word = path_to_word(grid, path)
+        #The do_search function has access to the other variables defined within
+        #the search(), such as the path list, which it can add to.
+        #The do_search function converts whatever path that's given into a word 
+        #and checks if it's in the dictionary.
+        if word in dictionary:
+            #If the path makes a word, it's added to the paths list.
+            paths.append(path)
+        #The do_search function can be called by the search() function, and it can
+        #call itself recursively to build up paths.
+        for next_pos in neighbours[path[- 1]]:
+            if next_pos not in path:
+                do_search(path + [next_pos])
+        #Whether the path makes a word or not, do_search gets each of the 
+        #neighbours of the last letter, checks to make sure the neighbouring
+        #letter isn't already in the path, and then continues the searching
+        #from that letter
+        #So, do_search calls itself eight time for each starting position, and
+        #again and again for each of the various neighbours of each neighbour
+    
+    for position in grid:
+        do_search([position])
+        
+    words = []
+    
+    for path in paths:
+        words.append(path_to_word(grid, path))
+    return set(words)
+    #For each position in the grid we do a search and convert all the paths and
+    #make valid words into words and return them in a list
+    
+  
