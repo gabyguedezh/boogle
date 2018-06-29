@@ -37,6 +37,8 @@ def neighbours_of_position(coords):
     #First, we just assign a number to each variable
     row = coords[0] 
     col = coords[1]
+    #This means that our given character is in the middle of a 3x3 grid
+    #as it would sit on center_center = (row, col + 1)
     
     #Assign each of the neighbours 
     #Top left to top right
@@ -151,6 +153,12 @@ def get_dictionary(dictionary_file):
         #This loads the dictionary file into a list of words that are uppercase
         return [w.strip().upper() for w in f]
         
+#Challenge - create the display_words method    
+def display_words(words):
+    for word in words:
+        print(word)
+    print("Found %s words" % len(words))
+    
 #Now we need to bring it all together with a function that turns
 #all our work into a runnable program
 def main():
@@ -160,9 +168,11 @@ def main():
     grid = make_grid(3, 3)
     dictionary = get_dictionary("words.txt")
     words = search(grid, dictionary)
-    for word in words:
-        print(word)
-    print("Found %s words" % len(words))
+    # for word in words:
+    #     print(word)
+    # print("Found %s words" % len(words))
+    #Challenge - create the display_words method to replace the for loop above
+    display_words(words)
 
 if __name__ == "__main__":
-        main()
+    main()
