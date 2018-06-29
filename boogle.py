@@ -87,6 +87,11 @@ def path_to_word(grid, path):
     #This gets the list of letters for the positions in the path and then joins
     #them into a string (join positions of grid if they're in the path)
     return "".join([grid[p] for p in path])
+    
+#After running cPrifile and realising that our search is taking too long, we'll
+#create a new function outside of it to aligerate its run
+def word_in_dictionary(word, dict):
+    return word in dict
 
 #Now we create a serach function
 def search(grid, dictionary):
@@ -117,7 +122,9 @@ def search(grid, dictionary):
         #the search(), such as the path list, which it can add to.
         #The do_search function converts whatever path that's given into a word 
         #and checks if it's in the dictionary.
-        if word in dictionary:
+        #if word in dictionary:
+        #The line above was changed to the function below after cProfile
+        if word_in_dictionary(word, dictionary):
             #If the path makes a word, it's added to the paths list.
             paths.append(path)
         #The do_search function can be called by the search() function, and it can
@@ -151,7 +158,8 @@ def get_dictionary(dictionary_file):
     """
     with open(dictionary_file) as f:
         #This loads the dictionary file into a list of words that are uppercase
-        return [w.strip().upper() for w in f]
+        #Changing the [] to {} changes the data structure from a list to a set
+        return {w.strip().upper() for w in f}
         
 #Challenge - create the display_words method    
 def display_words(words):
